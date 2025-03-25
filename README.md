@@ -41,8 +41,8 @@ Generalized Proportional Navigation is a broader framework where the acceleratio
 ## Specific Guidance Laws
 
 1. **PPN**: 
-   - Acceleration: `$\mathbf{a}_m = N \cdot V_m \cdot \dot{\sigma} \cdot \mathbf{m}$`
-   - `$V_m = |\mathbf{v}_m|$`, `$\mathbf{m}$` is perpendicular to `$\mathbf{v}_m$`.
+   - Acceleration: $\mathbf{a}_m = N \cdot V_m \cdot \dot{\sigma} \cdot \mathbf{m}$
+   - $V_m = |\mathbf{v}_m|$`, `$\mathbf{m}$` is perpendicular to `$\mathbf{v}_m$
    - Adjusts missile heading based on its own velocity.
 
 2. **TPN**: 
