@@ -87,3 +87,4 @@ For further reading and visual explanations, check out these YouTube videos:
 3. [The Homing Loop for Proportional Navigation Sim - Section 3 Module 1 - Missile Guidance Fundamentals](https://www.youtube.com/watch?v=RNpVj1tNaRI)
 4. [Proportional Navigation in Three Dimensions with Zero Effort Miss - Section 5 Module 1](https://www.youtube.com/watch?v=CMOh2xWk_qA)
 5. [Example of 3D Proportional Navigation with Zero Effort Miss - Section 5 Module 2](https://www.youtube.com/watch?v=Z-4hARD2ti8)
+6. [How to Code Proportional Navigation in Matlab or Octave - Guidance Fundamentals - Appendix A](https://www.youtube.com/watch?v=CS9BL-0mdh8)
