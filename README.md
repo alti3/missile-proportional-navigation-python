@@ -1,17 +1,17 @@
 # Missile Proportional Navigation in Python
 
-This repository provides Python implementations of various missile proportional navigation guidance laws. These simulations model missile intercepts in a 2D plane using different proportional navigation techniques.
+This repository provides Python implementations of various missile proportional navigation guidance laws. These simulations model missile intercepts in both 2D and 3D space using different proportional navigation techniques.
 
 ## Overview
 
 Proportional navigation is a guidance method used by missiles to intercept moving targets. The basic principle is that the missile applies acceleration proportional to the rate of rotation of the line-of-sight (LOS) to the target.
 
-The repository includes implementations of four different proportional navigation methods:
+The repository includes implementations of four different proportional navigation methods in both 2D and 3D:
 
-1. [**Pure Proportional Navigation (PPN)**](pure_proportional_navigation.py)
-2. [**True Proportional Navigation (TPN)**](true_proportional_navigation.py)
-3. [**Augmented Proportional Navigation**](augmented_proportional_navigation.py)
-4. [**Generalized Proportional Navigation**](generalized_proportional_navigation.py)
+1. [**Pure Proportional Navigation (PPN)**](pure_proportional_navigation.py) / [3D PPN](3d_pure_proportional_navigation.py)
+2. [**True Proportional Navigation (TPN)**](true_proportional_navigation.py) / [3D TPN](3d_true_proportional_navigation.py)
+3. [**Augmented Proportional Navigation**](augmented_proportional_navigation.py) / [3D Augmented PN](3d_augmented_proportional_navigation.py)
+4. [**Generalized Proportional Navigation**](generalized_proportional_navigation.py) / [3D Generalized PN](3d_generalized_proportional_navigation.py)
 
 ## Navigation Methods
 
@@ -29,11 +29,14 @@ Generalized Proportional Navigation is a broader framework where the acceleratio
 
 ## Common Features
 
-- **Libraries**: `numpy` for vector operations and `matplotlib.pyplot` for plotting.
+- **Libraries**: `numpy` for vector operations and `matplotlib.pyplot` for plotting. 3D versions use `mpl_toolkits.mplot3d`.
 - **Parameters**: Navigation constant \( N = 4 \), time step \( dt = 0.01 \) s, max time 100 s, intercept distance 1 m.
-- **Initial Conditions**: Target starts at (0, 0) moving right at 100 m/s; missile starts at (0, 10000) moving right at 200 m/s. For Augmented PN, the target accelerates upward at 10 m/s².
+- **Initial Conditions**: 
+  - 2D: Target starts at (0, 0) moving right at 100 m/s; missile starts at (0, 10000) moving right at 200 m/s.
+  - 3D: Target starts at (0, 0, 0) moving right at 100 m/s; missile starts at (0, 10000, 0) moving right at 200 m/s.
+  - For Augmented PN, the target accelerates upward at 10 m/s².
 - **Simulation**: Updates positions and velocities using Euler integration, stops when the missile is within 1 m of the target or time exceeds 100 s.
-- **Output**: Plots the missile and target trajectories with labels and a grid.
+- **Output**: Plots the missile and target trajectories with labels and a grid. 3D versions include z-axis visualization.
 
 ## Specific Guidance Laws
 
@@ -58,9 +61,13 @@ Generalized Proportional Navigation is a broader framework where the acceleratio
 
 ## Key Calculations
 
-- **LOS Rate (\( \dot{\sigma} \))**: \( \dot{\sigma} = \frac{r_x v_y - r_y v_x}{r_x^2 + r_y^2} \), derived from the 2D cross product.
+- **LOS Rate (\( \dot{\sigma} \))**: 
+  - 2D: \( \dot{\sigma} = \frac{r_x v_y - r_y v_x}{r_x^2 + r_y^2} \)
+  - 3D: \( \dot{\sigma} = \frac{\mathbf{r} \times \mathbf{v}}{|\mathbf{r}|^2} \)
 - **Closing Velocity (\( V_c \))**: \( V_c = -\frac{\mathbf{r} \cdot \mathbf{v}}{|\mathbf{r}|} \), negative rate of range change.
-- **Direction Vectors**: Computed by rotating the reference vector (e.g., \( \mathbf{v}_m \), LOS, or \( \mathbf{v} \)) 90° counterclockwise in 2D.
+- **Direction Vectors**: 
+  - 2D: Computed by rotating the reference vector 90° counterclockwise
+  - 3D: Computed using cross products
 
 ## Notes
 
@@ -69,4 +76,4 @@ Generalized Proportional Navigation is a broader framework where the acceleratio
 - Initial conditions ensure the missile can intercept within the simulation time, but adjustments might be needed for different scenarios.
 - Generalized PN's implementation is one interpretation; the Wikipedia article notes it allows varied acceleration directions, so alternatives (e.g., biased PN) could also be valid.
 
-These programs provide a practical demonstration of proportional navigation principles, suitable for educational purposes or as a starting point for more complex simulations.
+These programs provide a practical demonstration of proportional navigation principles in both 2D and 3D space, suitable for educational purposes or as a starting point for more complex simulations.
