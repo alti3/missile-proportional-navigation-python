@@ -42,29 +42,29 @@ Generalized Proportional Navigation is a broader framework where the acceleratio
 
 1. **PPN**: 
    - Acceleration: $\mathbf{a}_m = N \cdot V_m \cdot \dot{\sigma} \cdot \mathbf{m}$
-   - $V_m = |\mathbf{v}_m|$`, `$\mathbf{m}$` is perpendicular to `$\mathbf{v}_m$
+   - $V_m = |\mathbf{v}_m|$, $\mathbf{m}$ is perpendicular to $\mathbf{v}_m$
    - Adjusts missile heading based on its own velocity.
 
 2. **TPN**: 
-   - Acceleration: `$\mathbf{a}_m = N \cdot V_c \cdot \dot{\sigma} \cdot \mathbf{n}$`
-   - `$V_c$` is the closing velocity, `$\mathbf{n}$` is perpendicular to the LOS.
+   - Acceleration: $\mathbf{a}_m = N \cdot V_c \cdot \dot{\sigma} \cdot \mathbf{n}$
+   - $V_c$ is the closing velocity, $\mathbf{n}$ is perpendicular to the LOS.
    - Widely used due to its effectiveness against non-maneuvering targets.
 
 3. **Augmented PN**: 
-   - Acceleration: `$\mathbf{a}_m = N \cdot V_c \cdot \dot{\sigma} \cdot \mathbf{n} + \frac{N}{2} \cdot \mathbf{a}_t$`
-   - Adds a term for target acceleration `$\mathbf{a}_t$`, improving performance against maneuvering targets.
+   - Acceleration: $\mathbf{a}_m = N \cdot V_c \cdot \dot{\sigma} \cdot \mathbf{n} + \frac{N}{2} \cdot \mathbf{a}_t$
+   - Adds a term for target acceleration $\mathbf{a}_t$, improving performance against maneuvering targets.
 
 4. **Generalized PN**: 
-   - Acceleration: `$\mathbf{a}_m = N \cdot V_r \cdot \dot{\sigma} \cdot \mathbf{n}$`
-   - `$V_r = |\mathbf{v}_t - \mathbf{v}_m|$`, `$\mathbf{n}$` is perpendicular to the relative velocity.
+   - Acceleration: $\mathbf{a}_m = N \cdot V_r \cdot \dot{\sigma} \cdot \mathbf{n}$
+   - $V_r = |\mathbf{v}_t - \mathbf{v}_m|$, $\mathbf{n}$ is perpendicular to the relative velocity.
    - Interpreted as a variant where acceleration direction is more flexible, here chosen as perpendicular to relative velocity.
 
 ## Key Calculations
 
-- **LOS Rate (`$\dot{\sigma}$`)**: 
-  - 2D: `$\dot{\sigma} = \frac{r_x v_y - r_y v_x}{r_x^2 + r_y^2}$`
-  - 3D: `$\dot{\sigma} = \frac{\mathbf{r} \times \mathbf{v}}{|\mathbf{r}|^2}$`
-- **Closing Velocity (`$V_c$`)**: `$V_c = -\frac{\mathbf{r} \cdot \mathbf{v}}{|\mathbf{r}|}$`, negative rate of range change.
+- **LOS Rate ($\dot{\sigma}$)**: 
+  - 2D: $\dot{\sigma} = \frac{r_x v_y - r_y v_x}{r_x^2 + r_y^2}$
+  - 3D: $\dot{\sigma} = \frac{\mathbf{r} \times \mathbf{v}}{|\mathbf{r}|^2}$
+- **Closing Velocity ($V_c$)**: $V_c = -\frac{\mathbf{r} \cdot \mathbf{v}}{|\mathbf{r}|}$, negative rate of range change.
 - **Direction Vectors**: 
   - 2D: Computed by rotating the reference vector 90° counterclockwise
   - 3D: Computed using cross products
