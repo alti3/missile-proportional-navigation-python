@@ -7,6 +7,9 @@ N = 4              # Navigation constant
 dt = 0.01          # Time step (seconds)
 max_time = 100     # Maximum simulation time (seconds)
 intercept_dist = 1 # Intercept distance threshold (meters)
+g = 9.81           # Standard gravity (m/s^2)
+max_g = 12         # Maximum missile G-load
+max_accel = max_g * g # Maximum missile acceleration (m/s^2)
 
 # Initial conditions
 r_t = np.array([0.0, 0.0, 0.0])       # Target initial position (m)
@@ -46,6 +49,11 @@ while t < max_time:
             a_m = N * V_m * m
         else:
             a_m = np.array([0.0, 0.0, 0.0])
+        
+        # Apply acceleration limit
+        a_m_norm = np.linalg.norm(a_m)
+        if a_m_norm > max_accel:
+            a_m = a_m * (max_accel / a_m_norm)
         
         # Update missile state
         v_m += a_m * dt
