@@ -30,42 +30,56 @@ Generalized Proportional Navigation is a broader framework where the acceleratio
 ## Common Features
 
 - **Libraries**: `numpy` for vector operations and `matplotlib.pyplot` for plotting. 3D versions use `mpl_toolkits.mplot3d`.
-- **Parameters**: Navigation constant \( N = 4 \), time step \( dt = 0.01 \) s, max time 100 s, intercept distance 1 m.
-- **Initial Conditions**: 
+- **Parameters**: Navigation constant $N = 4$, time step $dt = 0.01$ s, max time 100 s, intercept distance 1 m.
+- **Missile G-Limit**:
+  - Standard gravity $g = 9.81$ m/s².
+  - Maximum missile G-load $\text{max\_g} = 12$.
+  - Maximum missile acceleration $\text{max\_accel} = \text{max\_g} \times g$.
+- **Initial Conditions**:
   - 2D: Target starts at (0, 0) moving right at 100 m/s; missile starts at (0, 10000) moving right at 200 m/s.
   - 3D: Target starts at (0, 0, 0) moving right at 100 m/s; missile starts at (0, 10000, 0) moving right at 200 m/s.
   - For Augmented PN, the target accelerates upward at 10 m/s².
 - **Simulation**: Updates positions and velocities using Euler integration, stops when the missile is within 1 m of the target or time exceeds 100 s.
+- **Acceleration Limit**: The calculated missile acceleration command $\mathbf{a}_m$ is checked against the maximum allowable acceleration $\text{max\_accel}$. If $|\mathbf{a}_m| > \text{max\_accel}$, the acceleration vector is scaled down to match the limit:
+  $$ \mathbf{a}_m = \mathbf{a}_m \times \frac{\text{max\_accel}}{|\mathbf{a}_m|} $$
 - **Output**: Plots the missile and target trajectories with labels and a grid. 3D versions include z-axis visualization.
 
 ## Specific Guidance Laws
 
-1. **PPN**: 
-   - Acceleration: $\mathbf{a}_m = N \cdot V_m \cdot \dot{\sigma} \cdot \mathbf{m}$
+1. **PPN**:
+   - Acceleration:
+     $$ \mathbf{a}_m = N \cdot V_m \cdot \dot{\sigma} \cdot \mathbf{m} $$
    - $V_m = |\mathbf{v}_m|$, $\mathbf{m}$ is perpendicular to $\mathbf{v}_m$
    - Adjusts missile heading based on its own velocity.
 
-2. **TPN**: 
-   - Acceleration: $\mathbf{a}_m = N \cdot V_c \cdot \dot{\sigma} \cdot \mathbf{n}$
+2. **TPN**:
+   - Acceleration:
+     $$ \mathbf{a}_m = N \cdot V_c \cdot \dot{\sigma} \cdot \mathbf{n} $$
    - $V_c$ is the closing velocity, $\mathbf{n}$ is perpendicular to the LOS.
    - Widely used due to its effectiveness against non-maneuvering targets.
 
-3. **Augmented PN**: 
-   - Acceleration: $\mathbf{a}_m = N \cdot V_c \cdot \dot{\sigma} \cdot \mathbf{n} + \frac{N}{2} \cdot \mathbf{a}_t$
+3. **Augmented PN**:
+   - Acceleration:
+     $$ \mathbf{a}_m = N \cdot V_c \cdot \dot{\sigma} \cdot \mathbf{n} + \frac{N}{2} \cdot \mathbf{a}_t $$
    - Adds a term for target acceleration $\mathbf{a}_t$, improving performance against maneuvering targets.
 
-4. **Generalized PN**: 
-   - Acceleration: $\mathbf{a}_m = N \cdot V_r \cdot \dot{\sigma} \cdot \mathbf{n}$
+4. **Generalized PN**:
+   - Acceleration:
+     $$ \mathbf{a}_m = N \cdot V_r \cdot \dot{\sigma} \cdot \mathbf{n} $$
    - $V_r = |\mathbf{v}_t - \mathbf{v}_m|$, $\mathbf{n}$ is perpendicular to the relative velocity.
    - Interpreted as a variant where acceleration direction is more flexible, here chosen as perpendicular to relative velocity.
 
 ## Key Calculations
 
-- **LOS Rate ($\dot{\sigma}$)**: 
-  - 2D: $\dot{\sigma} = \frac{r_x v_y - r_y v_x}{r_x^2 + r_y^2}$
-  - 3D: $\dot{\sigma} = \frac{\mathbf{r} \times \mathbf{v}}{|\mathbf{r}|^2}$
-- **Closing Velocity ($V_c$)**: $V_c = -\frac{\mathbf{r} \cdot \mathbf{v}}{|\mathbf{r}|}$, negative rate of range change.
-- **Direction Vectors**: 
+- **LOS Rate ($\dot{\sigma}$)**:
+  - 2D:
+    $$ \dot{\sigma} = \frac{r_x v_y - r_y v_x}{r_x^2 + r_y^2} $$
+  - 3D:
+    $$ \dot{\sigma} = \frac{\mathbf{r} \times \mathbf{v}}{|\mathbf{r}|^2} $$
+- **Closing Velocity ($V_c$)**:
+  $$ V_c = -\frac{\mathbf{r} \cdot \mathbf{v}}{|\mathbf{r}|} $$
+  negative rate of range change.
+- **Direction Vectors**:
   - 2D: Computed by rotating the reference vector 90° counterclockwise
   - 3D: Computed using cross products
 
